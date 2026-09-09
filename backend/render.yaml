@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ai-career-coach-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python manage.py migrate
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
