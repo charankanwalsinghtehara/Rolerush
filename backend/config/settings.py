@@ -11,7 +11,10 @@ load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+render_hostname = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 ALLOWED_HOSTS = [x for x in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if x]
+if render_hostname and render_hostname not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_hostname)
 
 INSTALLED_APPS = [
     "django.contrib.admin","django.contrib.auth","django.contrib.contenttypes",
@@ -62,6 +65,7 @@ REST_FRAMEWORK = {
 
 # Production security defaults
 if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

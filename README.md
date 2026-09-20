@@ -64,6 +64,19 @@ RAZORPAY_KEY_ID=...
 RAZORPAY_KEY_SECRET=...
 ```
 
+## Deploy on Render
+
+Create a new Render Blueprint from this repository. The root `render.yaml` creates
+the Django API, React static site, and a PostgreSQL database. After the services are
+created, set these values in Render:
+
+- `SECRET_KEY` on `rolerush-api`
+- `CORS_ALLOWED_ORIGINS` on `rolerush-api` to the full React site URL
+- `VITE_API_URL` on `rolerush-web` to the full API URL ending in `/api`
+- `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` on `rolerush-api` if billing is enabled
+
+Redeploy the web service after changing `VITE_API_URL`, because Vite embeds it at build time.
+
 ## Notes
 
 This is a production-oriented MVP foundation, not a claim of a fully audited SaaS.

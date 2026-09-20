@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ai-career-coach-api
+    name: rolerush-api
     runtime: python
     buildCommand: pip install -r requirements.txt && python manage.py migrate
     startCommand: gunicorn config.wsgi:application
